@@ -58,8 +58,11 @@ class cart_tree():
         return optimal_condition, used_values
 
     def test_tree(self, test_data):
-        test_data[("estimated_"+self.target)] = test_data.apply(lambda x: self.__go_through_tree(x, self.tree, self.data), axis=1)
-        return test_data
+        if type(self.tree) == dict:
+            test_data[("estimated_"+str(self.target))] = test_data.apply(lambda x: self.__go_through_tree(x, self.tree, self.data), axis=1)
+            return test_data
+        else:
+            return self.tree
 
     def __go_through_tree(self, values, node, target_data):
         if values[node["var"]] >= node["val"]:
